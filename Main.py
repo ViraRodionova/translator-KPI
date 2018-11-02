@@ -1,14 +1,15 @@
 from Codes import *
 from Errors import *
 from DataSet import DataSet
-from Scaner import Scaner
+from Scanner import Scanner
 
+import sys
 
 def translate(filename):
     DIGITS = DataSet(500, 750)
     STRINGS = DataSet(750, 1000)
 
-    scanner = Scaner(filename)
+    scanner = Scanner(filename)
 
     buf = ''
 
@@ -120,16 +121,15 @@ def get_string(c, f):
     return {'str': str, 'c': c}
 
 
-res = translate('tests/lab1/Test3')
-
-print 'Strings', res['STRINGS']
-print 'Digits', res['DIGITS']
+# res = translate('tests/lab1/Test5')
+#
+# print 'Strings', res['STRINGS']
+# print 'Digits', res['DIGITS']
 
 # if len(sys.argv) > 1:
 #     res = translate(sys.argv[1])
 #
-#     print 'Strings', res['TBSTR']
-#     print 'Digits', res['TBDS']
-#     print 'IDs', res['IDS']
+#     print 'Strings', res['STRINGS']
+#     print 'Digits', res['DIGITS']
 # else:
 #     print 'You haven\'t entered the filename\n\n'

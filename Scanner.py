@@ -1,4 +1,4 @@
-class Scaner:
+class Scanner:
     def __init__(self, filename):
         self.line = 1
         self.column = 1
@@ -30,7 +30,7 @@ class Scaner:
         return c
 
     def append(self, code, res='none'):
-        # print self.lineP, '\t', self.columnP, '\t', code, '\t', res
+        print self.lineP, '\t', self.columnP, '\t', code, '\t', res
         self.out.append(code)
         self.positions.append([self.lineP, self.columnP])
 

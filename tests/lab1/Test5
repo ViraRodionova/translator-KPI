@@ -1,19 +1,4 @@
 PROGRAM TEST2;
-
-(* some comment *)
-
-LABEL+ 4118,
-        24,
-        05,
-        11
-
+LABEL+ 4118
 BEGIN
-
-    15:GOTO 17;
-    LINK MYVAR, 15;
-    IN 4118;
-    OUT 11;
-
-    234ABC;
-
 END.
