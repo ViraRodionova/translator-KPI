@@ -45,6 +45,7 @@ def translate(filename):
 
         if is_dg(c):
             dgstr = c
+            is_digit_flag = True
 
             while True:
                 c = scanner.read()
@@ -59,15 +60,17 @@ def translate(filename):
                     dgstr += res['str']
                     buf = res['c']
 
-                    if is_keyword(dgstr):
-                        scanner.append(keywords[dgstr], dgstr)
-                    else:
-                        scanner.append(STRINGS.add(dgstr), dgstr)
-                    continue
+                    is_digit_flag = False
+                    break
                 else:
-                    scanner.exception(UnexpectedSymbolException, c)
+                    raise UnexpectedSymbolException([scanner.line, scanner.column - 1], c)
 
-            scanner.append(DIGITS.add(dgstr), dgstr)
+            if is_digit_flag:
+                scanner.append(DIGITS.add(dgstr), dgstr)
+            elif is_keyword(dgstr):
+                scanner.append(keywords[dgstr], dgstr)
+            else:
+                scanner.append(STRINGS.add(dgstr), dgstr)
 
             if is_dm(c):
                 buf = c
@@ -96,7 +99,7 @@ def translate(filename):
                 if flag:
                     continue
             else:
-                scanner.exception(UnexpectedSymbolException, '(')
+                raise UnexpectedSymbolException([scanner.line, scanner.column - 2], '(')
 
         scanner.exception(UnexpectedSymbolException, c)
 
@@ -117,11 +120,10 @@ def get_string(c, f):
     return {'str': str, 'c': c}
 
 
-res = translate('tests/lab1/Test1')
+res = translate('tests/lab1/Test3')
 
 print 'Strings', res['STRINGS']
 print 'Digits', res['DIGITS']
-# print 'IDs', res['IDS']
 
 # if len(sys.argv) > 1:
 #     res = translate(sys.argv[1])
