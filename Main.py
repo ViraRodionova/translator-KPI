@@ -121,10 +121,10 @@ def get_string(c, f):
     return {'str': str, 'c': c}
 
 
-# res = translate('tests/lab1/Test5')
+res = translate('tests/lab1/Test2')
 #
-# print 'Strings', res['STRINGS']
-# print 'Digits', res['DIGITS']
+print 'Strings', res['STRINGS']
+print 'Digits', res['DIGITS']
 
 # if len(sys.argv) > 1:
 #     res = translate(sys.argv[1])

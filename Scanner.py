@@ -2,12 +2,12 @@ class Scanner:
     def __init__(self, filename):
         self.line = 1
         self.column = 1
-        self.lineP = 1
+        self.lineP = 1 # remember start 
         self.columnP = 1
         self.f = open(filename, 'r')
         self.out = []
-        self.positions = []
-        self.c = ''
+        self.positions = [] # array of two elements (row and column)
+        self.c = '' # current symbol
 
     def decreaseCol(self):
         self.columnP -=1
