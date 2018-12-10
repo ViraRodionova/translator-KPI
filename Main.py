@@ -2,14 +2,13 @@ from Codes import *
 from Errors import *
 from DataSet import DataSet
 from Scanner import Scanner
+from Attribute import *
 
 import sys
 
 def translate(filename):
-    DIGITS = DataSet(500, 750)
-    STRINGS = DataSet(750, 1000)
-
     scanner = Scanner(filename)
+    attributesTable = getTableOfAttributes()
 
     buf = ''
 
@@ -24,12 +23,14 @@ def translate(filename):
         if not c:
           break
 
-        if is_empty(c):
+        if attributesTable[ord(c)] == SymbolType.empty:
             continue
 
-        if is_dm(c):
+        if(attributesTable[ord(c)]) == SymbolType.delim:
             scanner.append(ord(c), c)
             continue
+
+        if(attributesTable[ord(c)]) == SymbolType.letter:
 
         if is_lt(c):
             res = get_string(c, scanner)
@@ -122,9 +123,12 @@ def get_string(c, f):
 
 
 res = translate('tests/lab1/Test2')
+
+
+
 #
-print 'Strings', res['STRINGS']
-print 'Digits', res['DIGITS']
+# print 'Strings', res['STRINGS']
+# print 'Digits', res['DIGITS']
 
 # if len(sys.argv) > 1:
 #     res = translate(sys.argv[1])

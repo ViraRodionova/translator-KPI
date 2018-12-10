@@ -1,3 +1,5 @@
+from enum import Enum
+
 keywords = {
     'PROGRAM': 401,
     'BEGIN': 402,
@@ -31,3 +33,14 @@ def is_empty(c):
 
 def is_keyword(str):
     return str in keywords.keys()
+
+class SymbolType(Enum):
+    letter = 1
+    digit = 2
+    delim = 3
+    empty = 4
+    unexpected = 5
+
+
+
+
