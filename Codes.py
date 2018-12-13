@@ -31,3 +31,10 @@ def is_empty(c):
 
 def is_keyword(str):
     return str in keywords.keys()
+
+
+def get_keyword_by_code(code):
+    for key in keywords:
+        if keywords[key] == code:
+            return key
+    return
