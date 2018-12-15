@@ -7,6 +7,8 @@ from Attribute import *
 import sys
 
 def translate(filename):
+    DIGITS = DataSet(500, 750)
+    STRINGS = DataSet(750, 1000)
     scanner = Scanner(filename)
     attributesTable = getTableOfAttributes()
 
@@ -26,14 +28,12 @@ def translate(filename):
         if attributesTable[ord(c)] == SymbolType.empty:
             continue
 
-        if(attributesTable[ord(c)]) == SymbolType.delim:
+        if attributesTable[ord(c)] == SymbolType.delim:
             scanner.append(ord(c), c)
             continue
 
-        if(attributesTable[ord(c)]) == SymbolType.letter:
-
-        if is_lt(c):
-            res = get_string(c, scanner)
+        if attributesTable[ord(c)] == SymbolType.letter:
+            res = get_string(c, attributesTable, scanner)
 
             str = res['str']
             buf = res['c']
@@ -45,19 +45,19 @@ def translate(filename):
 
             continue
 
-        if is_dg(c):
+        if attributesTable[ord(c)] == SymbolType.digit:
             dgstr = c
             is_digit_flag = True
 
             while True:
                 c = scanner.read()
-                if is_dg(c):
+                if attributesTable[ord(c)] == SymbolType.digit:
                     dgstr += c
                     continue
-                elif is_dm(c) or is_empty(c) or not c:
+                elif attributesTable[ord(c)] == SymbolType.delim or attributesTable[ord(c)] == SymbolType.empty or not c:
                     break
-                elif is_lt(c):
-                    res = get_string(c, scanner)
+                elif attributesTable[ord(c)] == SymbolType.letter:
+                    res = get_string(c, attributesTable, scanner)
 
                     dgstr += res['str']
                     buf = res['c']
@@ -74,7 +74,7 @@ def translate(filename):
             else:
                 scanner.append(STRINGS.add(dgstr), dgstr)
 
-            if is_dm(c):
+            if attributesTable[ord(c)] == SymbolType.delim:
                 buf = c
 
             continue
@@ -105,15 +105,18 @@ def translate(filename):
 
         scanner.exception(UnexpectedSymbolException, c)
 
+    # scanner.handleEndOfReading()
+
     return {'out': scanner.out, 'STRINGS': STRINGS.set, 'DIGITS': DIGITS.set, 'positions': scanner.positions}
 
 
-def get_string(c, f):
+def get_string(c, attributesTable, f):
     str = c
 
     while True:
         c = f.read()
-        if is_lt(c) or is_dg(c):
+
+        if attributesTable[ord(c)] == SymbolType.letter or attributesTable[ord(c)] == SymbolType.digit:
             str += c
             continue
         else:
@@ -122,9 +125,7 @@ def get_string(c, f):
     return {'str': str, 'c': c}
 
 
-res = translate('tests/lab1/Test2')
-
-
+# res = translate('tests/lab1/Test3')
 
 #
 # print 'Strings', res['STRINGS']

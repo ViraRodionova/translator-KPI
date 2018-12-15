@@ -30,7 +30,7 @@ class Scanner:
         return c
 
     def append(self, code, res='none'):
-        print self.lineP, '\t', self.columnP, '\t', code, '\t', res
+        print(self.lineP, '\t', self.columnP, '\t', code, '\t', res)
         self.out.append(code)
         self.positions.append([self.lineP, self.columnP])
 
@@ -39,6 +39,9 @@ class Scanner:
 
     def exception(self, ExceptionClass, c=''):
         raise ExceptionClass([self.lineP, self.columnP], c)
+
+    def handleEndOfReading(self):
+        self.f.close()
 
     def __exit__(self, exc_type, exc_value, traceback):
         self.f.close()

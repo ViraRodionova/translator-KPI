@@ -1,7 +1,5 @@
 from Codes import *
 
-ascii = {}
-
 def getTableOfAttributes():
     ascii = {}
 
